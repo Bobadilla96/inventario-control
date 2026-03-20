@@ -1,6 +1,11 @@
-﻿# Sistema de Inventario (Proyecto 04)
+# Sistema de Inventario (Proyecto 04)
 
 Aplicacion Angular 17 standalone para gestion de stock con alertas reactivas y exportacion de reportes.
+
+## Enlaces
+
+- Repositorio: https://github.com/Bobadilla96/inventario-control
+- Demo (GitHub Pages): https://bobadilla96.github.io/inventario-control/
 
 ## Funcionalidades implementadas
 
@@ -57,3 +62,4 @@ npm run test
 ## Nota
 
 El backend esta simulado en memoria usando NgRx + mocks. Al recargar la app, el estado vuelve a los datos iniciales.
+
