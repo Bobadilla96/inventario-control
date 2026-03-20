@@ -1,0 +1,63 @@
+<div class="inventory-shell" *ngIf="user$ | async as user">
+  <header class="topbar inv-panel">
+    <div class="brand-block">
+      <button type="button" class="square-btn inv-btn-secondary" (click)="toggleSidebar()" aria-label="Alternar menu">
+        {{ sidebarCollapsed ? '>>' : '<<' }}
+      </button>
+      <div class="brand-mark">IV</div>
+      <div class="brand-copy">
+        <p class="inv-kicker">Inventory Control Hub</p>
+        <h1>{{ pageTitle$ | async }}</h1>
+      </div>
+    </div>
+
+    <div class="actions-block">
+      <button type="button" class="inv-btn-secondary" (click)="toggleTheme()">
+        {{ darkMode ? 'Modo claro' : 'Modo oscuro' }}
+      </button>
+      <div class="user-badge">
+        <strong>{{ user.name }}</strong>
+        <small>{{ user.role }}</small>
+      </div>
+      <button type="button" class="inv-btn-secondary" (click)="logout()">Salir</button>
+    </div>
+  </header>
+
+  <div class="workspace" [class.collapsed]="sidebarCollapsed" *ngIf="productsCount$ | async as productCount">
+    <aside class="sidebar inv-panel" [class.collapsed]="sidebarCollapsed">
+      <div class="sidebar-head">
+        <p class="inv-kicker">Navegacion</p>
+        <span class="inv-subtle">Operacion diaria</span>
+      </div>
+
+      <nav class="nav-list">
+        <a
+          *ngFor="let item of menu"
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          [class.hidden-link]="!canAccess(user.role, item)"
+        >
+          <span class="dot" aria-hidden="true"></span>
+          <span class="label">{{ item.label }}</span>
+        </a>
+      </nav>
+
+      <div class="side-stats">
+        <div class="stat-row">
+          <span class="inv-subtle">Productos</span>
+          <strong>{{ productCount }}</strong>
+        </div>
+        <div class="stat-row alert" *ngIf="alertsCount$ | async as alertsCount">
+          <span class="inv-subtle">Alertas</span>
+          <strong>{{ alertsCount }}</strong>
+        </div>
+      </div>
+    </aside>
+
+    <section class="stage">
+      <main class="content">
+        <router-outlet></router-outlet>
+      </main>
+    </section>
+  </div>
+</div>

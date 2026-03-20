@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+  color-scheme: light;
+  --inv-bg-1: #f2efe8;
+  --inv-bg-2: #ece9e2;
+  --inv-surface: #fffdf8;
+  --inv-surface-alt: #f8f4ec;
+  --inv-border: #d8d1c2;
+  --inv-text: #2b2822;
+  --inv-muted: #696457;
+  --inv-primary: #2f4f78;
+  --inv-primary-strong: #223c5a;
+  --inv-accent: #b9763a;
+  --inv-accent-soft: #f3e4d4;
+  --inv-danger: #b64542;
+  --inv-success: #1f7b5d;
+  --inv-radius-lg: 20px;
+  --inv-radius-md: 14px;
+  --inv-radius-sm: 10px;
+  --inv-shadow: 0 16px 32px -22px rgba(43, 40, 34, 0.4);
+}
+
+body.inv-dark {
+  color-scheme: dark;
+  --inv-bg-1: #131313;
+  --inv-bg-2: #1a1918;
+  --inv-surface: #20201f;
+  --inv-surface-alt: #282725;
+  --inv-border: #393731;
+  --inv-text: #f0ece3;
+  --inv-muted: #b8b1a3;
+  --inv-primary: #7ea6df;
+  --inv-primary-strong: #5d8bc9;
+  --inv-accent: #d89b63;
+  --inv-accent-soft: #413429;
+  --inv-danger: #ec8f8b;
+  --inv-success: #66c29d;
+  --inv-shadow: 0 16px 34px -24px rgba(0, 0, 0, 0.8);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  color: var(--inv-text);
+  background:
+    radial-gradient(circle at 9% 10%, color-mix(in srgb, var(--inv-primary) 18%, transparent), transparent 34%),
+    radial-gradient(circle at 87% 12%, color-mix(in srgb, var(--inv-accent) 25%, transparent), transparent 30%),
+    linear-gradient(180deg, var(--inv-bg-1) 0%, var(--inv-bg-2) 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'IBM Plex Serif', Georgia, serif;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+a {
+  color: inherit;
+}
+
+.inv-panel {
+  border: 1px solid var(--inv-border);
+  border-radius: var(--inv-radius-lg);
+  background: linear-gradient(180deg, var(--inv-surface) 0%, var(--inv-surface-alt) 100%);
+  box-shadow: var(--inv-shadow);
+}
+
+.inv-field {
+  width: 100%;
+  border: 1px solid var(--inv-border);
+  border-radius: var(--inv-radius-sm);
+  padding: 0.58rem 0.74rem;
+  font: inherit;
+  color: var(--inv-text);
+  background: var(--inv-surface);
+  transition: border-color 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+
+.inv-field:focus {
+  outline: none;
+  border-color: var(--inv-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--inv-primary) 22%, transparent);
+}
+
+.inv-btn-primary,
+.inv-btn-secondary,
+.inv-btn-danger {
+  border-radius: var(--inv-radius-sm);
+  padding: 0.5rem 0.78rem;
+  font-weight: 700;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.86rem;
+  cursor: pointer;
+  transition: transform 120ms ease, filter 120ms ease, border-color 120ms ease;
+}
+
+.inv-btn-primary:hover,
+.inv-btn-secondary:hover,
+.inv-btn-danger:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.98);
+}
+
+.inv-btn-primary {
+  border: 1px solid var(--inv-primary-strong);
+  background: linear-gradient(145deg, var(--inv-primary) 0%, var(--inv-primary-strong) 100%);
+  color: #fff;
+}
+
+.inv-btn-secondary {
+  border: 1px solid var(--inv-border);
+  background: var(--inv-surface);
+  color: var(--inv-text);
+}
+
+.inv-btn-danger {
+  border: 1px solid color-mix(in srgb, var(--inv-danger) 60%, var(--inv-border));
+  background: color-mix(in srgb, var(--inv-danger) 16%, var(--inv-surface));
+  color: var(--inv-danger);
+}
+
+.inv-btn-primary:disabled,
+.inv-btn-secondary:disabled,
+.inv-btn-danger:disabled {
+  opacity: 0.58;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.inv-subtle {
+  color: var(--inv-muted);
+}
+
+.inv-kicker {
+  margin: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--inv-muted);
+  font-weight: 700;
+}
+
+.inv-empty {
+  border: 1px dashed var(--inv-border);
+  border-radius: var(--inv-radius-md);
+  padding: 1rem;
+  text-align: center;
+  margin: 0;
+  background: color-mix(in srgb, var(--inv-surface-alt) 75%, transparent);
+  color: var(--inv-muted);
+}

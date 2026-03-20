@@ -1,0 +1,61 @@
+.stock-indicator {
+  border: 1px solid;
+  border-radius: 11px;
+  padding: 0.36rem 0.52rem;
+  display: grid;
+  gap: 0.25rem;
+  min-width: 120px;
+}
+
+.stock-indicator.compact {
+  min-width: auto;
+  padding: 0.26rem 0.42rem;
+}
+
+.stock-top {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+}
+
+.stock-top strong {
+  font-size: 0.82rem;
+}
+
+.stock-top small {
+  margin-left: auto;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.bar {
+  height: 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--inv-text) 12%, transparent);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: currentColor;
+}
+
+.level-ok {
+  color: var(--inv-success);
+  border-color: color-mix(in srgb, var(--inv-success) 44%, var(--inv-border));
+  background: color-mix(in srgb, var(--inv-success) 10%, var(--inv-surface));
+}
+
+.level-low {
+  color: var(--inv-accent);
+  border-color: color-mix(in srgb, var(--inv-accent) 54%, var(--inv-border));
+  background: color-mix(in srgb, var(--inv-accent) 12%, var(--inv-surface));
+}
+
+.level-critical,
+.level-out_of_stock {
+  color: var(--inv-danger);
+  border-color: color-mix(in srgb, var(--inv-danger) 54%, var(--inv-border));
+  background: color-mix(in srgb, var(--inv-danger) 12%, var(--inv-surface));
+}

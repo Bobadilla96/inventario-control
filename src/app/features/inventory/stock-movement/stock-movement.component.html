@@ -1,0 +1,77 @@
+<section class="move-shell">
+  <header class="move-head inv-panel">
+    <div>
+      <p class="inv-kicker">Operacion</p>
+      <h2>Registro de movimiento</h2>
+    </div>
+    <a class="back-link" routerLink="/inventory">Volver a inventario</a>
+  </header>
+
+  <form class="move-form inv-panel" [formGroup]="form" (ngSubmit)="submit()">
+    <label>
+      <span>Producto *</span>
+      <select class="inv-field" formControlName="productId">
+        <option value="0">Seleccionar</option>
+        <option *ngFor="let product of products$ | async" [value]="product.id">
+          {{ product.sku }} - {{ product.name }} ({{ product.stock }})
+        </option>
+      </select>
+    </label>
+
+    <label>
+      <span>Tipo *</span>
+      <select class="inv-field" formControlName="type">
+        <option value="entrada">Entrada</option>
+        <option value="salida">Salida</option>
+        <option value="ajuste">Ajuste</option>
+      </select>
+    </label>
+
+    <label>
+      <span>Cantidad *</span>
+      <input class="inv-field" formControlName="quantity" type="number" />
+      <small>{{ quantityHint(form.controls.type.value) }}</small>
+    </label>
+
+    <label class="wide">
+      <span>Motivo *</span>
+      <textarea class="inv-field" formControlName="reason" rows="2"></textarea>
+    </label>
+
+    <article class="stock-box" *ngIf="selectedProduct as product">
+      <span>Stock actual</span>
+      <strong>{{ product.stock }}</strong>
+      <small>Minimo: {{ product.minStock }}</small>
+    </article>
+
+    <p class="error wide" *ngIf="error">{{ error }}</p>
+    <p class="message wide" *ngIf="message">{{ message }}</p>
+
+    <footer class="wide">
+      <button type="submit" class="inv-btn-primary" [disabled]="loading">
+        {{ loading ? 'Guardando...' : 'Registrar movimiento' }}
+      </button>
+    </footer>
+  </form>
+
+  <article class="history inv-panel" *ngIf="movementHistory$ | async as movements">
+    <h3>Historial del producto</h3>
+
+    <div *ngIf="movements.length > 0; else noHistory">
+      <div class="history-item" *ngFor="let movement of movements | slice: 0 : 8">
+        <div>
+          <strong>{{ movement.type }}</strong>
+          <small>{{ movement.reason }}</small>
+        </div>
+        <div class="history-meta">
+          <span>{{ movement.previousStock }} -> {{ movement.newStock }}</span>
+          <small>{{ movement.date | date: 'dd/MM HH:mm' }}</small>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noHistory>
+      <p class="inv-empty">No hay movimientos para el producto seleccionado.</p>
+    </ng-template>
+  </article>
+</section>

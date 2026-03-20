@@ -1,0 +1,48 @@
+<div class="login-wrap">
+  <section class="login-hero inv-panel">
+    <p class="inv-kicker">Proyecto 04</p>
+    <h1>Inventario de almacen con enfoque operativo</h1>
+    <p class="hero-copy">Controla productos, movimientos, alertas y reportes desde una unica consola.</p>
+
+    <ul>
+      <li>Gestion de stock en tiempo real</li>
+      <li>Permisos por rol para cada flujo</li>
+      <li>Exportaciones listas para auditoria</li>
+    </ul>
+  </section>
+
+  <section class="login-card inv-panel">
+    <header>
+      <p class="inv-kicker">Acceso demo</p>
+      <h2>Ingresar al sistema</h2>
+      <span>Selecciona un rol para completar automaticamente las credenciales.</span>
+    </header>
+
+    <div class="roles">
+      <button
+        type="button"
+        *ngFor="let access of demoAccess"
+        [ngClass]="{ active: selectedEmail === access.email }"
+        (click)="fill(access)"
+      >
+        {{ access.role }}
+      </button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <label>
+        <span>Email</span>
+        <input class="inv-field" type="email" formControlName="email" placeholder="usuario@inventario.com" />
+      </label>
+
+      <label>
+        <span>Contrasena</span>
+        <input class="inv-field" type="password" formControlName="password" placeholder="******" />
+      </label>
+
+      <p class="error" *ngIf="error">{{ error }}</p>
+
+      <button type="submit" class="inv-btn-primary" [disabled]="loading">{{ loading ? 'Ingresando...' : 'Entrar al panel' }}</button>
+    </form>
+  </section>
+</div>

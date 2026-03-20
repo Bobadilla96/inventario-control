@@ -1,0 +1,31 @@
+<section class="alerts-shell" *ngIf="alerts$ | async as alerts">
+  <header class="alerts-head inv-panel">
+    <p class="inv-kicker">Monitoreo</p>
+    <h2>Alertas de stock bajo</h2>
+    <p class="inv-subtle">{{ alerts.length }} productos requieren atencion</p>
+  </header>
+
+  <div class="alert-list" *ngIf="alerts.length > 0; else noAlerts">
+    <article class="alert-card inv-panel" *ngFor="let product of alerts">
+      <div class="info">
+        <strong>{{ product.name }}</strong>
+        <small>{{ product.sku }} - {{ product.category }} - {{ product.location }}</small>
+      </div>
+
+      <div class="meta">
+        <span class="severity">{{ severityLabel(product) }}</span>
+        <span>Stock: {{ product.stock }}</span>
+        <span>Minimo: {{ product.minStock }}</span>
+        <span>Faltan: {{ missingUnits(product) }}</span>
+      </div>
+
+      <app-stock-indicator [product]="product"></app-stock-indicator>
+
+      <button type="button" class="inv-btn-primary" (click)="registerEntry(product.id)">Registrar entrada</button>
+    </article>
+  </div>
+
+  <ng-template #noAlerts>
+    <p class="inv-empty">No hay alertas de stock activas.</p>
+  </ng-template>
+</section>

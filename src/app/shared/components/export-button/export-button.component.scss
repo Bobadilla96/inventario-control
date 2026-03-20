@@ -1,0 +1,28 @@
+.export-btn {
+  border: 1px solid var(--inv-border);
+  border-radius: 10px;
+  background: var(--inv-surface);
+  color: var(--inv-text);
+  font-weight: 800;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.46rem 0.68rem;
+  cursor: pointer;
+  transition: border-color 120ms ease, background-color 120ms ease;
+}
+
+.export-btn:hover {
+  border-color: color-mix(in srgb, var(--inv-primary) 45%, var(--inv-border));
+}
+
+.export-btn.kind-pdf {
+  border-color: color-mix(in srgb, var(--inv-danger) 55%, var(--inv-border));
+  color: var(--inv-danger);
+  background: color-mix(in srgb, var(--inv-danger) 11%, var(--inv-surface));
+}
+
+.export-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}

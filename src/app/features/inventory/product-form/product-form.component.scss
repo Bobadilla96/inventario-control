@@ -1,0 +1,101 @@
+.form-shell {
+  padding: 0.85rem;
+}
+
+.form-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.form-head h2 {
+  margin: 0.12rem 0;
+}
+
+.form-head .inv-subtle {
+  margin: 0;
+  font-size: 0.83rem;
+}
+
+.back-link {
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--inv-primary);
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+form {
+  margin-top: 0.78rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 0.65rem;
+}
+
+label {
+  display: grid;
+  gap: 0.3rem;
+}
+
+label span {
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--inv-muted);
+  font-weight: 700;
+}
+
+.sku-box {
+  border: 1px dashed var(--inv-border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--inv-accent-soft) 40%, var(--inv-surface));
+  padding: 0.55rem 0.62rem;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.sku-box span {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--inv-muted);
+  font-weight: 700;
+}
+
+.sku-box strong {
+  font-size: 1.05rem;
+}
+
+.wide {
+  grid-column: span 2;
+}
+
+.error {
+  margin: 0;
+  color: var(--inv-danger);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 760px) {
+  form {
+    grid-template-columns: 1fr;
+  }
+
+  .wide {
+    grid-column: span 1;
+  }
+
+  .form-head {
+    flex-direction: column;
+  }
+}

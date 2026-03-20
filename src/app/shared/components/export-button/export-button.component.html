@@ -1,0 +1,3 @@
+<button type="button" class="export-btn" [class.kind-pdf]="kind === 'pdf'" [disabled]="disabled" (click)="clicked.emit()">
+  {{ label }} {{ kind.toUpperCase() }}
+</button>

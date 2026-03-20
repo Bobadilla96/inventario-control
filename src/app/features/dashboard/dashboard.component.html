@@ -1,0 +1,111 @@
+<section class="dashboard-grid">
+  <div class="kpi-row" *ngIf="products$ | async as products">
+    <article class="kpi-card inv-panel">
+      <p class="inv-kicker">KPI</p>
+      <span>Total productos</span>
+      <strong>{{ products.length }}</strong>
+    </article>
+
+    <article class="kpi-card inv-panel" *ngIf="totalValue$ | async as totalValue">
+      <p class="inv-kicker">KPI</p>
+      <span>Valor inventario</span>
+      <strong>{{ totalValue | currency: 'USD' : 'symbol' : '1.0-0' }}</strong>
+    </article>
+
+    <article class="kpi-card inv-panel" *ngIf="alerts$ | async as alerts">
+      <p class="inv-kicker">KPI</p>
+      <span>Con alerta</span>
+      <strong>{{ alerts.length }}</strong>
+    </article>
+
+    <article class="kpi-card inv-panel" *ngIf="todayMovements$ | async as todayMoves">
+      <p class="inv-kicker">KPI</p>
+      <span>Movimientos hoy</span>
+      <strong>{{ todayMoves }}</strong>
+    </article>
+  </div>
+
+  <article class="panel inv-panel" *ngIf="categoryData$ | async as categories">
+    <header>
+      <h3>Distribucion por categoria</h3>
+      <p>Participacion de productos por categoria</p>
+    </header>
+
+    <div class="bar-list">
+      <div class="bar-item" *ngFor="let category of categories">
+        <div class="bar-label">
+          <span>{{ category.category }}</span>
+          <strong>{{ category.count }}</strong>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill" [style.width.%]="(category.count / categories[0].count) * 100"></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="panel inv-panel" *ngIf="topProducts$ | async as topProducts">
+    <header>
+      <h3>Top 10 por valor</h3>
+      <p>Stock x precio</p>
+    </header>
+
+    <div class="bar-list">
+      <div class="bar-item" *ngFor="let product of topProducts">
+        <div class="bar-label">
+          <span>{{ product.name }}</span>
+          <strong>{{ product.inventoryValue | currency: 'USD' : 'symbol' : '1.0-0' }}</strong>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill accent" [style.width.%]="(product.inventoryValue / topProducts[0].inventoryValue) * 100"></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="panel inv-panel" *ngIf="alerts$ | async as alerts">
+    <header>
+      <h3>Productos con alerta</h3>
+      <p>Sin stock / criticos / bajos</p>
+    </header>
+
+    <div class="alert-list" *ngIf="alerts.length > 0; else noAlerts">
+      <div class="alert-item" *ngFor="let product of alerts | slice: 0 : 6">
+        <div>
+          <strong>{{ product.name }}</strong>
+          <small>{{ product.sku }} - {{ product.location }}</small>
+        </div>
+        <app-stock-indicator [product]="product" [compact]="true"></app-stock-indicator>
+      </div>
+    </div>
+
+    <ng-template #noAlerts>
+      <p class="inv-empty">No hay alertas activas.</p>
+    </ng-template>
+  </article>
+
+  <article class="panel inv-panel" *ngIf="recentMovements$ | async as movements">
+    <header>
+      <h3>Ultimos movimientos</h3>
+      <p>Actividad reciente del inventario</p>
+    </header>
+
+    <div class="movement-list" *ngIf="movements.length > 0; else noMoves">
+      <div class="movement-item" *ngFor="let movement of movements">
+        <div>
+          <strong>{{ movement.productName }}</strong>
+          <small>{{ movement.reason }}</small>
+        </div>
+        <div class="meta">
+          <span>{{ movement.type }}</span>
+          <span>{{ movement.quantity > 0 ? '+' : '' }}{{ movement.quantity }}</span>
+          <span>{{ movement.date | date: 'dd/MM HH:mm' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noMoves>
+      <p class="inv-empty">Sin movimientos registrados.</p>
+    </ng-template>
+  </article>
+</section>

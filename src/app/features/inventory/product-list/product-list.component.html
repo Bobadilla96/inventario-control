@@ -1,0 +1,146 @@
+<section class="list-shell">
+  <header class="panel-head inv-panel">
+    <div>
+      <p class="inv-kicker">Inventario activo</p>
+      <h2>Productos</h2>
+      <p class="inv-subtle">{{ products.length }} registros filtrados</p>
+    </div>
+
+    <div class="head-actions">
+      <app-export-button label="Productos" kind="csv" (clicked)="exportProductsCsv()"></app-export-button>
+      <app-export-button label="Productos" kind="pdf" (clicked)="exportProductsPdf()"></app-export-button>
+      <button type="button" class="inv-btn-primary" (click)="openCreate()">Nuevo producto</button>
+    </div>
+  </header>
+
+  <form [formGroup]="filtersForm" class="filters inv-panel">
+    <label class="filter-item search">
+      <span>Busqueda</span>
+      <input class="inv-field" type="search" formControlName="search" placeholder="SKU, nombre o descripcion" />
+    </label>
+
+    <label class="filter-item">
+      <span>Categoria</span>
+      <select class="inv-field" formControlName="category">
+        <option value="all">Todas</option>
+        <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+      </select>
+    </label>
+
+    <label class="filter-item">
+      <span>Nivel stock</span>
+      <select class="inv-field" formControlName="stockLevel">
+        <option value="all">Todos</option>
+        <option value="out_of_stock">Sin stock</option>
+        <option value="critical">Critico</option>
+        <option value="low">Bajo</option>
+        <option value="ok">OK</option>
+      </select>
+    </label>
+
+    <label class="filter-item">
+      <span>Ubicacion</span>
+      <select class="inv-field" formControlName="location">
+        <option value="all">Todas</option>
+        <option *ngFor="let location of locations$ | async" [value]="location">{{ location }}</option>
+      </select>
+    </label>
+  </form>
+
+  <div class="table-wrap inv-panel" *ngIf="pagedProducts.length > 0; else emptyState">
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <button type="button" class="sort-btn" (click)="sortBy('sku')">
+              SKU <span class="sort-icon" [attr.data-state]="getSortState('sku')" aria-hidden="true"></span>
+            </button>
+          </th>
+          <th>
+            <button type="button" class="sort-btn" (click)="sortBy('name')">
+              Nombre <span class="sort-icon" [attr.data-state]="getSortState('name')" aria-hidden="true"></span>
+            </button>
+          </th>
+          <th>
+            <button type="button" class="sort-btn" (click)="sortBy('category')">
+              Categoria <span class="sort-icon" [attr.data-state]="getSortState('category')" aria-hidden="true"></span>
+            </button>
+          </th>
+          <th>
+            <button type="button" class="sort-btn" (click)="sortBy('stock')">
+              Stock <span class="sort-icon" [attr.data-state]="getSortState('stock')" aria-hidden="true"></span>
+            </button>
+          </th>
+          <th>
+            <button type="button" class="sort-btn" (click)="sortBy('minStock')">
+              Min <span class="sort-icon" [attr.data-state]="getSortState('minStock')" aria-hidden="true"></span>
+            </button>
+          </th>
+          <th>
+            <button type="button" class="sort-btn" (click)="sortBy('price')">
+              Precio <span class="sort-icon" [attr.data-state]="getSortState('price')" aria-hidden="true"></span>
+            </button>
+          </th>
+          <th>
+            <button type="button" class="sort-btn" (click)="sortBy('location')">
+              Ubicacion <span class="sort-icon" [attr.data-state]="getSortState('location')" aria-hidden="true"></span>
+            </button>
+          </th>
+          <th>
+            <button type="button" class="sort-btn" (click)="sortBy('status')">
+              Estado <span class="sort-icon" [attr.data-state]="getSortState('status')" aria-hidden="true"></span>
+            </button>
+          </th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of pagedProducts" [ngClass]="{ danger: level(product) === 'out_of_stock' }">
+          <td>{{ product.sku }}</td>
+          <td>
+            <strong>{{ product.name }}</strong>
+            <small>{{ product.description }}</small>
+          </td>
+          <td>{{ product.category }}</td>
+          <td><app-stock-indicator [product]="product"></app-stock-indicator></td>
+          <td>{{ product.minStock }}</td>
+          <td>{{ product.price | currency: 'USD' : 'symbol' : '1.0-0' }}</td>
+          <td>{{ product.location }}</td>
+          <td>
+            <span class="status-chip" [class.discontinued]="product.status === 'discontinued'">{{ product.status }}</span>
+          </td>
+          <td>
+            <div class="actions">
+              <button type="button" class="action-btn" (click)="editProduct(product.id)">Editar</button>
+              <button type="button" class="action-btn" (click)="registerMovement(product.id)">Movimiento</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #emptyState>
+    <p class="inv-empty">No hay productos para los filtros seleccionados.</p>
+  </ng-template>
+
+  <footer class="pagination inv-panel" *ngIf="products.length > 0">
+    <div class="range">
+      Mostrando {{ rangeStart }}-{{ rangeEnd }} de {{ products.length }}
+    </div>
+
+    <div class="pager-controls">
+      <button type="button" class="inv-btn-secondary" [disabled]="page === 1" (click)="goToPage(page - 1)">Anterior</button>
+      <button
+        type="button"
+        class="page-btn"
+        *ngFor="let item of visiblePages"
+        [class.active]="item === page"
+        (click)="goToPage(item)"
+      >
+        {{ item }}
+      </button>
+      <button type="button" class="inv-btn-secondary" [disabled]="page === totalPages" (click)="goToPage(page + 1)">Siguiente</button>
+    </div>
+  </footer>
+</section>

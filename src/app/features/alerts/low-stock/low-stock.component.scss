@@ -1,0 +1,54 @@
+.alerts-shell {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.alerts-head {
+  padding: 0.8rem;
+}
+
+.alerts-head h2 {
+  margin: 0.14rem 0;
+}
+
+.alerts-head .inv-subtle {
+  margin: 0;
+  font-size: 0.84rem;
+}
+
+.alert-list {
+  display: grid;
+  gap: 0.52rem;
+}
+
+.alert-card {
+  padding: 0.72rem;
+  display: grid;
+  gap: 0.48rem;
+  border-left: 5px solid color-mix(in srgb, var(--inv-danger) 55%, var(--inv-accent));
+}
+
+.info small {
+  display: block;
+  color: var(--inv-muted);
+  margin-top: 0.08rem;
+}
+
+.meta {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  font-size: 0.79rem;
+  color: var(--inv-muted);
+}
+
+.severity {
+  border: 1px solid color-mix(in srgb, var(--inv-danger) 58%, var(--inv-border));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--inv-danger) 14%, var(--inv-surface));
+  color: var(--inv-danger);
+  padding: 0.1rem 0.48rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}

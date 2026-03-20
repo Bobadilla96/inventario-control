@@ -1,0 +1,91 @@
+<section class="report-shell">
+  <header class="panel inv-panel">
+    <p class="inv-kicker">Analitica</p>
+    <h2>Reportes de inventario</h2>
+    <p class="inv-subtle">Exporta productos y movimientos en CSV o PDF.</p>
+  </header>
+
+  <section class="panel inv-panel" *ngIf="products$ | async as products">
+    <div class="panel-head">
+      <div>
+        <h3>Reporte de productos</h3>
+        <small>{{ products.length }} productos</small>
+      </div>
+      <div class="actions">
+        <app-export-button label="Productos" kind="csv" (clicked)="exportProductsCsv(products)"></app-export-button>
+        <app-export-button label="Productos" kind="pdf" (clicked)="exportProductsPdf(products)"></app-export-button>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>SKU</th>
+            <th>Nombre</th>
+            <th>Categoria</th>
+            <th>Stock</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products | slice: 0 : 8">
+            <td>{{ product.sku }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.stock }}</td>
+            <td>{{ product.price | currency: 'USD' : 'symbol' : '1.0-0' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel inv-panel" *ngIf="movements$ | async as movements">
+    <div class="panel-head">
+      <div>
+        <h3>Reporte de movimientos</h3>
+        <small>{{ movements.length }} movimientos</small>
+      </div>
+      <div class="actions">
+        <app-export-button label="Movimientos" kind="csv" (clicked)="exportMovementsCsv(movements)"></app-export-button>
+        <app-export-button label="Movimientos" kind="pdf" (clicked)="exportMovementsPdf(movements)"></app-export-button>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Producto ID</th>
+            <th>Tipo</th>
+            <th>Cantidad</th>
+            <th>Usuario</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let movement of movements | slice: 0 : 10">
+            <td>{{ movement.date | date: 'dd/MM HH:mm' }}</td>
+            <td>{{ movement.productId }}</td>
+            <td>{{ movement.type }}</td>
+            <td>{{ movement.quantity }}</td>
+            <td>{{ movement.userName }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel summary inv-panel" *ngIf="totalValue$ | async as totalValue">
+    <div>
+      <span>Valor total inventario</span>
+      <strong>{{ totalValue | currency: 'USD' : 'symbol' : '1.0-0' }}</strong>
+    </div>
+
+    <div *ngIf="alerts$ | async as alerts">
+      <span>Productos con alerta</span>
+      <strong>{{ alerts.length }}</strong>
+    </div>
+  </section>
+</section>

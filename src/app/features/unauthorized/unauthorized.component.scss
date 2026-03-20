@@ -1,0 +1,27 @@
+.unauthorized {
+  margin: 3rem auto;
+  max-width: 520px;
+  padding: 1.1rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+h2 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  color: var(--inv-muted);
+}
+
+a {
+  margin-top: 0.1rem;
+  color: var(--inv-primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

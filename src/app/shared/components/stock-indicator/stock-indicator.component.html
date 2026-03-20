@@ -1,0 +1,11 @@
+<div class="stock-indicator" [ngClass]="'level-' + level" [class.compact]="compact">
+  <div class="stock-top">
+    <strong>{{ product.stock }}</strong>
+    <span>/ min {{ product.minStock }}</span>
+    <small>{{ label }}</small>
+  </div>
+
+  <div class="bar" *ngIf="!compact">
+    <div class="fill" [style.width.%]="progress"></div>
+  </div>
+</div>
